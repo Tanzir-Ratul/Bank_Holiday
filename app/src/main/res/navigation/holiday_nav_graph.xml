@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/holiday_nav_graph"
+    app:startDestination="@id/signInOrRegistrationFragment">
+
+    <fragment
+        android:id="@+id/signInOrRegistrationFragment"
+        android:name="com.example.bankholiday.ui.fragments.SignInOrRegistrationFragment"
+        android:label="fragment_sign_in_or_registration"
+        tools:layout="@layout/fragment_sign_in_or_registration" >
+        <action
+            android:id="@+id/action_signInOrRegistrationFragment_to_bankHolidayFragment"
+            app:destination="@id/bankHolidayFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bankHolidayFragment"
+        android:name="com.example.bankholiday.ui.fragments.BankHolidayFragment"
+        android:label="fragment_bank_holiday"
+        tools:layout="@layout/fragment_bank_holiday" />
+</navigation>

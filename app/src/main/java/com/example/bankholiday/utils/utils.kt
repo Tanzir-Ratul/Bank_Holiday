@@ -4,7 +4,7 @@ import android.view.View
 
 fun animateVisibility(view: View, isVisible: Boolean) {
     val animation = if (isVisible) {
-        view.animate().alpha(1f).setDuration(100)
+        view.animate().alpha(1f).setDuration(500)
     } else {
         view.animate().alpha(0f).setDuration(500)
     }

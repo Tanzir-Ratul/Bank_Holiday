@@ -55,22 +55,24 @@ class SignInOrRegistrationFragment : Fragment() {
             registrationResponse.observe(viewLifecycleOwner) {
                 if (it != null) {
                     if (!it.token.isNullOrEmpty()) {
-                        Log.d("inside", "reg respons")
                         session.accessToken = it.token
                         findNavController().navigate(R.id.action_signInOrRegistrationFragment_to_bankHolidayFragment)
                     }
-                } else Toast.makeText(requireContext(), "Invalid request", Toast.LENGTH_SHORT)
-                    .show()
+                } else if(messageCode.value!=null && messageCode.value != 200 && messageCode.value != 402) {
+                    Toast.makeText(requireContext(), "Invalid request", Toast.LENGTH_SHORT)
+                        .show()
+                }else if(messageCode.value!=null && messageCode.value == 402){
+                    Toast.makeText(requireContext(), "The email has already been taken", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
 
             loginResponse.observe(viewLifecycleOwner) {
-                Log.d("inside", "$it")
                 if (it != null) {
                     if (!it.token.isNullOrEmpty()) {
-                        Log.d("inside", "login respons")
                         findNavController().navigate(R.id.action_signInOrRegistrationFragment_to_bankHolidayFragment)
                     }
-                } else if(message.value == "Unauthorized") {
+                } else if(messageCode.value == 401) {
                     Toast.makeText(requireContext(), "Unauthorized", Toast.LENGTH_SHORT)
                         .show()
                 }
@@ -164,6 +166,7 @@ class SignInOrRegistrationFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        viewModel.resetValues()
         viewModel.loginResponse.removeObservers(viewLifecycleOwner)
         viewModel.registrationResponse.removeObservers(viewLifecycleOwner)
 

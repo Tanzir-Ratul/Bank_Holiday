@@ -32,11 +32,12 @@ class HolidayViewModel @Inject constructor(private val repository: HolidayReposi
     private var _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    var message = MutableLiveData<String>()
+    var messageCode = MutableLiveData<Int?>()
 
     init {
         getHolidaysData("2021")
     }
+
     fun registerUser(name: String?, email: String?, password: String?) {
         try {
             _isLoading.value = true
@@ -46,7 +47,8 @@ class HolidayViewModel @Inject constructor(private val repository: HolidayReposi
                     if (response.body() != null) {
                         _registrationResponse.value = response.body()
                     }
-                } else _registrationResponse.value = null
+                } else messageCode.value = response.code()
+                Log.d("responseCode", "${response.code()}")
                 _isLoading.value = false
             }
         } catch (e: Exception) {
@@ -66,10 +68,9 @@ class HolidayViewModel @Inject constructor(private val repository: HolidayReposi
                         _loginResponse.value = response.body()
                     }
                 } else {
-                    if(response.code() == 401) {
-                        message.value = "Unauthorized"
-                    }
+                    messageCode.value = response.code()
                 }
+
 
 
                 _isLoading.value = false
@@ -102,5 +103,12 @@ class HolidayViewModel @Inject constructor(private val repository: HolidayReposi
             _isLoading.value = false
             e.printStackTrace()
         }
+    }
+
+    fun resetValues() {
+        _registrationResponse.value = null
+        _loginResponse.value = null
+        messageCode.value = null
+        //_getHolidayData.value = null
     }
 }

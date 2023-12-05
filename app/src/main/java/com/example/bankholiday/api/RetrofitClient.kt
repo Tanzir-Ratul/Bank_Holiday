@@ -32,10 +32,11 @@ object RetrofitClient {
     @Provides
     @Singleton
     @Named("api_key")
-    fun provideApiKey(): String = "your_api_key_here"
+    fun provideApiKey(): String = "1AmhKSrBVmfL3EcwAmTAT81SUSvkKyEa"
 
     @Provides
     @Singleton
+    @Named("bearer_token")
     fun provideBearerToken(sessionManager: SessionManager): String {
         return sessionManager.accessToken ?: ""
     }
@@ -71,12 +72,11 @@ object RetrofitClient {
                             .build()
                     }
 
-                    originalRequest.url.toString().startsWith("https://other.api.com/") -> {
+                    /*originalRequest.url.toString().startsWith("https://calendarific.com/api/v2/") -> {
                         // Add API key for the second base URL
                         originalRequest.newBuilder()
-                            .header("Api-Key", apiKey)
                             .build()
-                    }
+                    }*/
 
                     else -> originalRequest
                 }
@@ -84,20 +84,19 @@ object RetrofitClient {
             }
             cache(cache)
             readTimeout(20, TimeUnit.SECONDS)
-            writeTimeout(30, TimeUnit.SECONDS)
+            writeTimeout(20, TimeUnit.SECONDS)
             connectTimeout(20, TimeUnit.SECONDS)
 
         }.build()
     }
 
-    fun retrofitObjWithApiKey(baseUrl: String, gson: Gson, httpClient: OkHttpClient): Retrofit {
-        return if (baseUrl == "https://other.api.com/") {
+   /*fun retrofitObjWithApiKey(baseUrl: String, gson: Gson, httpClient: OkHttpClient): Retrofit {
+        return if (baseUrl == "https://calendarific.com/api/v2/") {
             retrofitObj(baseUrl, gson, httpClient.newBuilder()
                 .addInterceptor { chain ->
                     // Include the API key in the request headers only for the second base URL
                     val originalRequest = chain.request()
                     val newRequest = originalRequest.newBuilder()
-                        .header("Api-Key", provideApiKey())
                         .build()
                     chain.proceed(newRequest)
                 }
@@ -106,7 +105,7 @@ object RetrofitClient {
         } else {
             retrofitObj(baseUrl, gson, httpClient)
         }
-    }
+    }*/
 
     fun retrofitObj(baseUrl: String, gson: Gson, httpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
@@ -116,4 +115,61 @@ object RetrofitClient {
             .build()
     }
 }
+
+
+/*@Module
+@InstallIn(SingletonComponent::class)
+object AppModule {
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson {
+        return GsonBuilder().setLenient().setPrettyPrinting().create()
+    }
+
+    @Provides
+    @Singleton
+    fun createCache(application: Application): Cache {
+        val cacheSize = 5L  1024L  1024L // 5 MB
+        return Cache(File(application.cacheDir, "${application.packageName}.cache"), cacheSize)
+    }
+
+    @Provides
+    @Singleton
+    fun createOkHttpClient(cache: Cache?): OkHttpClient {
+        return OkHttpClient.Builder().apply {
+            if (BuildConfig.DEBUG) {
+                val httpLoggingInterceptor = HttpLoggingInterceptor()
+                val logging = httpLoggingInterceptor.apply {
+                    httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+                }
+                addInterceptor(logging)
+            }
+            cache(cache)
+            readTimeout(30, TimeUnit.SECONDS)
+            writeTimeout(1, TimeUnit.MINUTES)
+            connectTimeout(30, TimeUnit.SECONDS)
+        }.build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRetrofitInstances(gson: Gson, httpClient: OkHttpClient): Map<String, ApiInterface> {
+        val baseUrlMap = mapOf(
+            "weather" to AppConstant.BASE_URL_WEATHER,
+            // Add other base URLs and their keys here
+        )
+
+        val retrofitMap = mutableMapOf<String, ApiInterface>()
+        baseUrlMap.forEach { (key, value) ->
+            val retrofit = Retrofit.Builder()
+                .baseUrl(value)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(httpClient)
+                .build()
+            retrofitMap[key] = retrofit.create(ApiInterface::class.java)
+        }
+        return retrofitMap
+    }
+}*/
 

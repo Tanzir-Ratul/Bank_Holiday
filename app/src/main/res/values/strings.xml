@@ -2,4 +2,7 @@
     <string name="app_name">Bank Holiday</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="by_pressing_submit_you_aggress_n_t_t_t_t_to_our_terms_amp_condition"><![CDATA[By pressing ‘Submit’ you aggress \n \t\t\t\t to our terms & condition]]></string>
 </resources>

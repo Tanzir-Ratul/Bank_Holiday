@@ -171,10 +171,11 @@
                     android:drawableStart="@drawable/email"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="Email Address"
+                    android:hint="@string/email_address"
+                    android:inputType="textEmailAddress"
                     android:includeFontPadding="false"
                     android:textSize="14sp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/nameET" />
@@ -189,7 +190,8 @@
                     android:drawableStart="@drawable/password"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="Password"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
                     app:layout_goneMarginTop="15dp"
                     android:includeFontPadding="false"
                     android:textSize="14sp"
@@ -205,12 +207,22 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="50dp"
-                    android:text="By pressing ‘Submit’ you aggress \n \t\t\t\t to our terms &amp; condition"
+                    android:text="@string/by_pressing_submit_you_aggress_n_t_t_t_t_to_our_terms_amp_condition"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/passwordET" />
-
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

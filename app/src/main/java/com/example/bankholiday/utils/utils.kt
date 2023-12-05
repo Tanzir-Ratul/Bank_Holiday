@@ -1,5 +1,6 @@
 package com.example.bankholiday.utils
 
+import android.util.Patterns
 import android.view.View
 
 fun animateVisibility(view: View, isVisible: Boolean) {
@@ -12,4 +13,8 @@ fun animateVisibility(view: View, isVisible: Boolean) {
     animation.withEndAction {
         view.visibility = if (isVisible) View.VISIBLE else View.GONE
     }.start()
+}
+
+ fun isValidEmail(email: String): Boolean {
+    return Patterns.EMAIL_ADDRESS.matcher(email).matches()
 }

@@ -7,7 +7,9 @@ data class Login(
     @SerializedName("token")
     var token: String?, // eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2hybS5kaWdpa29laW4uY29tL2FwaS9sb2dpbiIsImlhdCI6MTcwMTY3MTYwNCwiZXhwIjoxNzAxNjc1MjA0LCJuYmYiOjE3MDE2NzE2MDQsImp0aSI6ImJaYTkzaUtBeGd4ZWp0OEYiLCJzdWIiOiI0NCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.k-eWFirO6am3NU33U8MZWiWWEMK3lHcavyq_VYcyf0A
     @SerializedName("user")
-    var user: User?
+    var user: User?,
+    @SerializedName("error")
+    var error: String?
 ) {
     data class User(
         @SerializedName("avatar")

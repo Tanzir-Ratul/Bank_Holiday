@@ -20,7 +20,7 @@ class AuthInterceptorClass(private val application: Application) : Interceptor {
 
         val response: Response = chain.proceed(request)
         if (response.code == 401) {
-          //  (application as MainApplication).refreshToken()
+            //(application as BankHolidayApplication).refreshToken()
         }
         return response
     }

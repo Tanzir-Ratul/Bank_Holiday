@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="margin_between_views">8dp</dimen>
+    <dimen name="margin_between_views">2dp</dimen>
+    <dimen name="margin_between_containers">5dp</dimen>
+    <dimen name="start_padding">16dp</dimen>
+    <dimen name="remove_margin_top">2dp</dimen>
+    <dimen name="cardview_corner_radius">10dp</dimen>
 </resources>

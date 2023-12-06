@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="0dp"
+            android:background="@color/lightBlue"
+            android:id="@+id/horizontalView"
+            app:layout_constraintStart_toStartOf="@+id/sCircle"
+            app:layout_constraintEnd_toEndOf="@+id/sCircle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHeight_percent="0.4" />
+
+        <View
+            android:id="@+id/sCircle"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/lightBlue"
+            app:layout_constraintBottom_toTopOf="@+id/sHorizon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalView" />
+        <View
+            android:layout_width="2dp"
+            android:layout_height="0dp"
+            android:background="@color/lightBlue"
+            android:id="@+id/sHorizon"
+            app:layout_constraintStart_toStartOf="@+id/sCircle"
+            app:layout_constraintEnd_toEndOf="@+id/sCircle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.4" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="15dp"
+            android:layout_marginStart="40dp"
+            app:cardCornerRadius="10dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/horizontalView"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+
+                <TextView
+                    android:id="@+id/dateTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:includeFontPadding="false"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="2023-01-01" />
+
+                <TextView
+                    android:id="@+id/nameTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:includeFontPadding="false"
+                    android:text="New Year's Day"
+                    android:textColor="#121212"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/dateTextView"
+                    app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
+
+                <!--<TextView
+                    android:id="@+id/descriptionTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:visibility="gone"
+                    android:includeFontPadding="false"
+                    android:textSize="16sp"
+                    tools:text="New Year’s Day is the first day of the year, or January 1, in the Gregorian calendar." />
+    -->
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

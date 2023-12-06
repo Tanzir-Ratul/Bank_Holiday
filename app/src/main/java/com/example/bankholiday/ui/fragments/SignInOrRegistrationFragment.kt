@@ -99,6 +99,7 @@ class SignInOrRegistrationFragment : Fragment() {
         binding?.view1?.visibility = View.VISIBLE
         binding?.view2?.visibility = View.GONE
         animateVisibility(binding?.nameET!!, false)
+        animateVisibility(binding?.termsAndConditionsTV!!, false)
         binding?.getStartedNowTV?.text = "Welcome Back"
         binding?.enterCredentialsTV?.text = "Sign in to continue"
         trackWhichButton = true
@@ -138,6 +139,7 @@ class SignInOrRegistrationFragment : Fragment() {
             binding?.view1?.visibility = View.VISIBLE
             binding?.view2?.visibility = View.GONE
             animateVisibility(binding?.nameET!!, false)
+            animateVisibility(binding?.termsAndConditionsTV!!, false)
             binding?.getStartedNowTV?.text = "Welcome Back"
             binding?.enterCredentialsTV?.text = "Sign in to continue"
             trackWhichButton = true
@@ -146,6 +148,7 @@ class SignInOrRegistrationFragment : Fragment() {
 
         binding?.signupCL?.setOnClickListener {
             animateVisibility(binding?.nameET!!, true)
+            animateVisibility(binding?.termsAndConditionsTV!!, true)
             binding?.view1?.visibility = View.GONE
             binding?.view2?.visibility = View.VISIBLE
             binding?.getStartedNowTV?.text = "Get Started Now"

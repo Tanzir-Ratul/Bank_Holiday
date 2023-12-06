@@ -197,8 +197,10 @@
                     android:inputType="textPassword"
                     app:layout_goneMarginTop="15dp"
                     android:includeFontPadding="false"
+                    app:layout_goneMarginBottom="50dp"
                     android:textSize="14sp"
                     android:visibility="visible"
+                    app:layout_constraintBottom_toTopOf="@+id/termsAndConditionsTV"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/emailET" />
@@ -210,11 +212,12 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="50dp"
+                    android:visibility="gone"
                     android:text="@string/by_pressing_submit_you_aggress_n_t_t_t_t_to_our_terms_amp_condition"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/passwordET" />
+                     />
                 <ProgressBar
                     android:id="@+id/progressBar"
                     android:layout_width="50dp"

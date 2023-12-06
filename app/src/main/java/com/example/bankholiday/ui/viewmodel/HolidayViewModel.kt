@@ -7,79 +7,23 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bankholiday.api.models.HolidayData
 import com.example.bankholiday.api.models.Login
-import com.example.bankholiday.api.models.Registration
+import com.example.bankholiday.api.models.MonthWithHolidays
 import com.example.bankholiday.ui.repository.HolidayRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import retrofit2.Response
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class HolidayViewModel @Inject constructor(private val repository: HolidayRepository) :
     ViewModel() {
 
-
-    private var _loginResponse = MutableLiveData<Login?>()
-    val loginResponse: LiveData<Login?> = _loginResponse
-
-    private var _registrationResponse = MutableLiveData<Registration?>()
-    val registrationResponse: LiveData<Registration?> = _registrationResponse
-
-    private var _getHolidayData = MutableLiveData<HolidayData?>()
-    val getHolidayData: LiveData<HolidayData?> = _getHolidayData
+    private var _getHolidayData = MutableLiveData<MutableList<MonthWithHolidays>?>()
+    val getHolidayData: MutableLiveData<MutableList<MonthWithHolidays>?> = _getHolidayData
 
     private var _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    var messageCode = MutableLiveData<Int?>()
 
-    init {
-        getHolidaysData("2021")
-    }
-
-    fun registerUser(name: String?, email: String?, password: String?) {
-        try {
-            _isLoading.value = true
-            viewModelScope.launch {
-                val response = repository.registerUser(name, email, password)
-                if (response.isSuccessful) {
-                    if (response.body() != null) {
-                        _registrationResponse.value = response.body()
-                    }
-                } else messageCode.value = response.code()
-                Log.d("responseCode", "${response.code()}")
-                _isLoading.value = false
-            }
-        } catch (e: Exception) {
-            _isLoading.value = false
-            e.printStackTrace()
-        }
-    }
-
-    fun loginUser(userName: String?, password: String?) {
-        try {
-            _isLoading.value = true
-            viewModelScope.launch {
-                val response = repository.loginUser(userName, password)
-
-                if (response.isSuccessful) {
-                    if (response.body() != null) {
-                        _loginResponse.value = response.body()
-                    }
-                } else {
-                    messageCode.value = response.code()
-                }
-
-
-
-                _isLoading.value = false
-            }
-        } catch (e: Exception) {
-            _isLoading.value = false
-            e.printStackTrace()
-        }
-    }
 
 
     fun getHolidaysData(year: String?) {
@@ -89,8 +33,27 @@ class HolidayViewModel @Inject constructor(private val repository: HolidayReposi
                 val response = repository.getHolidaysData(year)
                 if (response.isSuccessful) {
                     if (response.body() != null && response.body()?.meta?.code == 200) {
-                        _getHolidayData.value = response.body()
-                        Log.d("_getHolidayData", "${response.body()}")
+                        val holidays: List<HolidayData.Response.Holiday?>? =
+                            response.body()?.response?.holidays
+                        // Create a map to group holidays by month
+                        val holidaysByMonth = holidays.orEmpty().groupBy {
+                            it?.date?.datetime?.month
+                        }
+                        Log.d("holidaysByMonth", "${holidaysByMonth.toString()}")
+                        // Convert the grouped data to custom data class
+                        val monthsWithHolidays = holidaysByMonth.map { (month, holidays) ->
+                            val monthName = getMonthName(month)
+                            val holidayItems = holidays.mapNotNull {
+                                val date = it?.date?.iso ?: return@mapNotNull null
+                                val name = it.name ?: ""
+                                val description = it.description ?: ""
+                                MonthWithHolidays.HolidayItem(date, name, description)
+                            }
+                            Log.d("holidayItems", "${holidayItems.toString()}")
+
+                            MonthWithHolidays(monthName, holidayItems)
+                        }
+                        _getHolidayData.value = monthsWithHolidays.toMutableList()
                     } else {
                         _getHolidayData.value = null
                     }
@@ -105,10 +68,23 @@ class HolidayViewModel @Inject constructor(private val repository: HolidayReposi
         }
     }
 
-    fun resetValues() {
-        _registrationResponse.value = null
-        _loginResponse.value = null
-        messageCode.value = null
-        //_getHolidayData.value = null
+    private fun getMonthName(month: Int?): String {
+        return when (month) {
+            1 -> "January"
+            2 -> "February"
+            3 -> "March"
+            4 -> "April"
+            5 -> "May"
+            6 -> "June"
+            7 -> "July"
+            8 -> "August"
+            9 -> "September"
+            10 -> "October"
+            11 -> "November"
+            12 -> "December"
+            else -> "Unknown"
+        }
     }
+
+
 }

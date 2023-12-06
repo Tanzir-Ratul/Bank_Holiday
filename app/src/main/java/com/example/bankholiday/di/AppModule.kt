@@ -4,8 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.bankholiday.api.ApiService
 import com.example.bankholiday.api.RetrofitClient.retrofitObj
-import com.example.bankholiday.api.models.HolidayApiService
-import com.example.bankholiday.api.models.HolidayData
+import com.example.bankholiday.api.HolidayApiService
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides

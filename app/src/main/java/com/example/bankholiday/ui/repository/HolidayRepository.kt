@@ -1,7 +1,7 @@
 package com.example.bankholiday.ui.repository
 
 import com.example.bankholiday.api.ApiService
-import com.example.bankholiday.api.models.HolidayApiService
+import com.example.bankholiday.api.HolidayApiService
 import com.example.bankholiday.api.models.HolidayData
 import com.example.bankholiday.api.models.Login
 import com.example.bankholiday.api.models.Registration

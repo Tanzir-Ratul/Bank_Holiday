@@ -25,17 +25,16 @@ class LogInOrRegistrationViewModel @Inject constructor(private val repository: H
     val registrationResponse: LiveData<Registration?> = _registrationResponse
 
 
-
     private var _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
     var messageCode = MutableLiveData<Int?>()
 
 
-
     fun registerUser(name: String?, email: String?, password: String?) {
+
+        _isLoading.value = true
         try {
-            _isLoading.value = true
             viewModelScope.launch {
                 val response = repository.registerUser(name, email, password)
                 if (response.isSuccessful) {
@@ -43,7 +42,6 @@ class LogInOrRegistrationViewModel @Inject constructor(private val repository: H
                         _registrationResponse.value = response.body()
                     }
                 } else messageCode.value = response.code()
-                Log.d("responseCode", "re ${response.code()}")
                 _isLoading.value = false
             }
         } catch (e: Exception) {
@@ -53,8 +51,8 @@ class LogInOrRegistrationViewModel @Inject constructor(private val repository: H
     }
 
     fun loginUser(userName: String?, password: String?) {
+        _isLoading.value = true
         try {
-            _isLoading.value = true
             viewModelScope.launch {
                 val response = repository.loginUser(userName, password)
 
@@ -64,11 +62,7 @@ class LogInOrRegistrationViewModel @Inject constructor(private val repository: H
                     }
                 } else {
                     messageCode.value = response.code()
-                    Log.d("responseCode", "lo ${response.code()}")
                 }
-
-
-
                 _isLoading.value = false
             }
         } catch (e: Exception) {
@@ -76,7 +70,6 @@ class LogInOrRegistrationViewModel @Inject constructor(private val repository: H
             e.printStackTrace()
         }
     }
-
 
 
     fun resetValues() {

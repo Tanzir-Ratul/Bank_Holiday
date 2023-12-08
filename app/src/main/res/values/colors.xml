@@ -3,4 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="lightBlue">#6F8090</color>
+    <color name="colorAsh">#E0E0E0</color>
+    <color name="step">#E4DCD8</color>
+    <color name="termsAndCondition">#FFA500</color>
 </resources>

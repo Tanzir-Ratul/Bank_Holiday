@@ -1,6 +1,7 @@
 package com.example.bankholiday.api.models
 
 
+import androidx.annotation.Nullable
 import com.google.gson.annotations.SerializedName
 
 data class HolidayData(

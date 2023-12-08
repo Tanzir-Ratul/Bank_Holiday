@@ -5,4 +5,9 @@
     <string name="email_address">Email Address</string>
     <string name="password">Password</string>
     <string name="by_pressing_submit_you_aggress_n_t_t_t_t_to_our_terms_amp_condition"><![CDATA[By pressing ‘Submit’ you aggress \n \t\t\t\t to our terms & condition]]></string>
+    <string name="todo">TODO</string>
+    <string name="bank_holiday">Bank Holiday</string>
+    <string name="no_data_has_been_found">No Data has been found.</string>
+    <string name="login">Login</string>
+    <string name="signup">signup</string>
 </resources>

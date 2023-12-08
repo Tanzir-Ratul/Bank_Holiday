@@ -23,39 +23,49 @@ class HolidayViewModel @Inject constructor(private val repository: HolidayReposi
     private var _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private var _messageCode = MutableLiveData<Int?>()
+    val messageCode:LiveData<Int?> = _messageCode
+
 
 
 
     fun getHolidaysData(year: String?) {
-        try {
+
             _isLoading.value = true
+        try {
             viewModelScope.launch {
                 val response = repository.getHolidaysData(year)
                 if (response.isSuccessful) {
                     if (response.body() != null && response.body()?.meta?.code == 200) {
-                        val holidays: List<HolidayData.Response.Holiday?>? =
-                            response.body()?.response?.holidays
-                        // Create a map to group holidays by month
-                        val holidaysByMonth = holidays.orEmpty().groupBy {
-                            it?.date?.datetime?.month
-                        }
-                        // Convert the grouped data to custom data class
-                        val monthsWithHolidays = holidaysByMonth.map { (month, holidays) ->
-                            val monthName = getMonthName(month)
-                            val holidayItems = holidays.mapNotNull {
-                                val date = it?.date?.iso ?: return@mapNotNull null
-                                val name = it.name ?: ""
-                                val description = it.description ?: ""
-                                MonthWithHolidays.HolidayItem(date, name, description)
+                        val responseHolidays = response.body()?.response?.holidays
+                        if(!responseHolidays.isNullOrEmpty()){
+                            val holidays: List<HolidayData.Response.Holiday?> =
+                                responseHolidays
+                            // Create a map to group holidays by month
+                            val holidaysByMonth = holidays.orEmpty().groupBy {
+                                it?.date?.datetime?.month
                             }
+                            // Convert the grouped data to custom data class
+                            val monthsWithHolidays = holidaysByMonth.map { (month, holidays) ->
+                                val monthName = getMonthName(month)
+                                val holidayItems = holidays.mapNotNull {
+                                    val date = it?.date?.iso ?: return@mapNotNull null
+                                    val name = it.name ?: ""
+                                    val description = it.description ?: ""
+                                    MonthWithHolidays.HolidayItem(date, name, description)
+                                }
 
-                            MonthWithHolidays(monthName, holidayItems)
+                                MonthWithHolidays(monthName, holidayItems)
+                            }
+                            _getHolidayData.value = monthsWithHolidays.toMutableList()
+                        }else {
+                            _getHolidayData.value = null
                         }
-                        _getHolidayData.value = monthsWithHolidays.toMutableList()
                     } else {
                         _getHolidayData.value = null
                     }
                 } else {
+                    _messageCode.postValue(response.code())
                     _getHolidayData.value = null
                 }
                 _isLoading.value = false
@@ -82,6 +92,12 @@ class HolidayViewModel @Inject constructor(private val repository: HolidayReposi
             12 -> "December"
             else -> "Unknown"
         }
+    }
+
+    fun resetLiveDate() {
+        _messageCode.value = null
+        _getHolidayData.value = null
+        _isLoading.value = false
     }
 
 

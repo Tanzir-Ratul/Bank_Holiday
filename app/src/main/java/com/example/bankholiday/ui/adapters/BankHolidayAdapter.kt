@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bankholiday.api.models.MonthWithHolidays
@@ -42,6 +43,7 @@ class BankHolidayAdapter(val ctx: Context) :
         fun bind(item: MonthWithHolidays?) {
 
             binding.monthTV.text = item?.monthName
+
             binding.childRV.visibility =
                 if (item?.holidayItems?.isNotEmpty() == true) View.VISIBLE else View.GONE
 
@@ -49,6 +51,8 @@ class BankHolidayAdapter(val ctx: Context) :
             binding.childRV.adapter = adapter
 
         }
+
+
 
 
     }

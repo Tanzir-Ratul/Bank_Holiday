@@ -1,4 +1,4 @@
-echo "# Your App Name
+echo "# Holiday
 
 ## Overview
 

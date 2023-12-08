@@ -39,7 +39,6 @@ class HolidayViewModel @Inject constructor(private val repository: HolidayReposi
                         val holidaysByMonth = holidays.orEmpty().groupBy {
                             it?.date?.datetime?.month
                         }
-                        Log.d("holidaysByMonth", "${holidaysByMonth.toString()}")
                         // Convert the grouped data to custom data class
                         val monthsWithHolidays = holidaysByMonth.map { (month, holidays) ->
                             val monthName = getMonthName(month)
@@ -49,7 +48,6 @@ class HolidayViewModel @Inject constructor(private val repository: HolidayReposi
                                 val description = it.description ?: ""
                                 MonthWithHolidays.HolidayItem(date, name, description)
                             }
-                            Log.d("holidayItems", "${holidayItems.toString()}")
 
                             MonthWithHolidays(monthName, holidayItems)
                         }

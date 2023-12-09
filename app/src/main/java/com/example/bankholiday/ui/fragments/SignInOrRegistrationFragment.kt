@@ -185,16 +185,20 @@ class SignInOrRegistrationFragment : Fragment() {
                     binding?.nameET?.error = "Please enter name"
                     return@setOnClickListener
                 }
-            } else if (binding?.emailET?.text.toString().isEmpty()) {
+            }
+            if (binding?.emailET?.text.toString().isEmpty()) {
                 binding?.emailET?.error = "Please enter email"
                 return@setOnClickListener
-            } else if (!isValidEmail(binding?.emailET?.text.toString().trim())) {
+            }
+            if (!isValidEmail(binding?.emailET?.text.toString().trim())) {
                 binding?.emailET?.error = "Invalid Email Address"
                 return@setOnClickListener
-            } else if (binding?.passwordET?.text.toString().isEmpty()) {
+            }
+            if (binding?.passwordET?.text.toString().isEmpty()) {
                 binding?.passwordET?.error = "Please enter password"
                 return@setOnClickListener
-            } else if (binding?.passwordET?.text.toString().length < 6) {
+            }
+            if (binding?.passwordET?.text.toString().length < 6) {
                 binding?.passwordET?.error = "Password must be at least 6 characters"
                 return@setOnClickListener
 

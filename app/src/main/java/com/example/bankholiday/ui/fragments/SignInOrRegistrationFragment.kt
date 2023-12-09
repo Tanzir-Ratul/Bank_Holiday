@@ -38,8 +38,8 @@ class SignInOrRegistrationFragment : Fragment() {
 
 
     // Load regular and bold fonts
-    private  var  poppinsBold:Typeface? = null
-    private  var poppinsMedium:Typeface? = null
+    private var poppinsBold: Typeface? = null
+    private var poppinsMedium: Typeface? = null
     private var trackWhichButton = true
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,11 +68,15 @@ class SignInOrRegistrationFragment : Fragment() {
                         session.accessToken = it.token
                         findNavController().navigate(R.id.action_signInOrRegistrationFragment_to_bankHolidayFragment)
                     }
-                } else if(messageCode.value!=null && messageCode.value != 200 && messageCode.value != 402) {
+                } else if (messageCode.value != null && messageCode.value != 200 && messageCode.value != 402) {
                     Toast.makeText(requireContext(), "Invalid request", Toast.LENGTH_SHORT)
                         .show()
-                }else if(messageCode.value!=null && messageCode.value == 402){
-                    Toast.makeText(requireContext(), "The email has already been taken", Toast.LENGTH_SHORT)
+                } else if (messageCode.value != null && messageCode.value == 402) {
+                    Toast.makeText(
+                        requireContext(),
+                        "The email has already been taken",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 }
             }
@@ -83,16 +87,16 @@ class SignInOrRegistrationFragment : Fragment() {
                     if (!it.token.isNullOrEmpty()) {
                         findNavController().navigate(R.id.action_signInOrRegistrationFragment_to_bankHolidayFragment)
                     }
-                } else if(messageCode.value == 401) {
+                } else if (messageCode.value == 401) {
                     Toast.makeText(requireContext(), "Unauthorized", Toast.LENGTH_SHORT)
                         .show()
                 }
 
             }
 
-            messageCode.observe(viewLifecycleOwner){code->
-                if(code != null){
-                    handleUnsuccessfulAPI(requireContext(),code)
+            messageCode.observe(viewLifecycleOwner) { code ->
+                if (code != null) {
+                    handleUnsuccessfulAPI(requireContext(), code)
                 }
             }
 
@@ -121,7 +125,12 @@ class SignInOrRegistrationFragment : Fragment() {
         val termsEnd = termsStart + "our terms & conditions".length
 
         spannableString.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(requireContext(),R.color.termsAndCondition)),
+            ForegroundColorSpan(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.termsAndCondition
+                )
+            ),
             termsStart,
             termsEnd,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -152,6 +161,7 @@ class SignInOrRegistrationFragment : Fragment() {
         binding?.enterCredentialsTV?.text = "Sign in to continue"
         trackWhichButton = true
     }
+
     private fun showExitConfirmationDialog() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Exit App")
@@ -160,11 +170,12 @@ class SignInOrRegistrationFragment : Fragment() {
             .setPositiveButton("Yes") { _, _ ->
                 requireActivity().finish()
             }
-            .setNegativeButton("No") { dialog,_  ->
+            .setNegativeButton("No") { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
     }
+
     private fun setOnClickListener() {
 
         binding?.btnSignIn?.setOnClickListener {
@@ -174,8 +185,7 @@ class SignInOrRegistrationFragment : Fragment() {
                     binding?.nameET?.error = "Please enter name"
                     return@setOnClickListener
                 }
-            }
-            else if (binding?.emailET?.text.toString().isEmpty()) {
+            } else if (binding?.emailET?.text.toString().isEmpty()) {
                 binding?.emailET?.error = "Please enter email"
                 return@setOnClickListener
             } else if (!isValidEmail(binding?.emailET?.text.toString().trim())) {
@@ -188,12 +198,13 @@ class SignInOrRegistrationFragment : Fragment() {
                 binding?.passwordET?.error = "Password must be at least 6 characters"
                 return@setOnClickListener
 
-            } else
-                if (!trackWhichButton) {
-                    registrationApiCall()
-                } else {
-                    loginApiCall()
-                }
+            }
+
+            if (!trackWhichButton) {
+                registrationApiCall()
+            } else {
+                loginApiCall()
+            }
 
         }
 

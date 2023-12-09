@@ -13,14 +13,19 @@ import javax.inject.Inject
 
 class HolidayRepository
 @Inject
-constructor(private val apiService: ApiService,private val holidayApiService: HolidayApiService) {
+constructor(private val apiService: ApiService, private val holidayApiService: HolidayApiService) {
     suspend fun registerUser(
         name: String?,
         email: String?,
         password: String?,
     ): Response<Registration> {
         return withContext(Dispatchers.IO) {
-            apiService.registerUser(name, email, password)
+            try {
+                apiService.registerUser(name, email, password)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Response.success(null)
+            }
         }
     }
 
@@ -39,9 +44,13 @@ constructor(private val apiService: ApiService,private val holidayApiService: Ho
         }
     }
 
-    suspend fun getHolidaysData(year:String?):Response<HolidayData>  {
-        return withContext(Dispatchers.IO){
-            holidayApiService.getHolidays(apiKey = "1AmhKSrBVmfL3EcwAmTAT81SUSvkKyEa",country = "BD",year = year)
+    suspend fun getHolidaysData(year: String?): Response<HolidayData> {
+        return withContext(Dispatchers.IO) {
+            holidayApiService.getHolidays(
+                apiKey = "1AmhKSrBVmfL3EcwAmTAT81SUSvkKyEa",
+                country = "BD",
+                year = year
+            )
         }
     }
 }

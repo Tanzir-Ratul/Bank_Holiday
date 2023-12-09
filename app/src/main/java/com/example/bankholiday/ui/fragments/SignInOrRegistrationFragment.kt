@@ -194,7 +194,7 @@ class SignInOrRegistrationFragment : Fragment() {
                 binding?.emailET?.error = "Invalid Email Address"
                 return@setOnClickListener
             }
-            if (binding?.passwordET?.text.toString().isEmpty()) {
+            if (binding?.passwordET?.text.toString().trim().isEmpty()) {
                 binding?.passwordET?.error = "Please enter password"
                 return@setOnClickListener
             }

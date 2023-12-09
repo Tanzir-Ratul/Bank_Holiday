@@ -30,7 +30,12 @@ constructor(private val apiService: ApiService,private val holidayApiService: Ho
         password: String?
     ): Response<Login> {
         return withContext(Dispatchers.IO) {
-            apiService.loginUser(email, password)
+            try {
+                apiService.loginUser(email, password)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Response.success(null)
+            }
         }
     }
 
